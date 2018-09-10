@@ -34,11 +34,11 @@ install_via_apt()
 	sudo apt-add-repository -y ppa:system76-dev/stable
 	#Update and install
 	sudo apt update && sudo apt upgrade
-	sudo apt -y install ranger mpd firefox kubectl dnsutils python-pip \
+	sudo apt -y install ranger mpd firefox kubectl dnsutils python-pip python-pip3 \
 	steam git rsync feh neofetch jq borgbackup nmtui tmux kdeconnect fbreader pastebinit fzf \
 	zsh ncmpcpp neomutt urlview newsbeuter mpv rtorrent transmission-gtk weechat rofi mopidy \
 	system76-cuda-latest system76-cudnn-9.2 system76-driver system76-driver-nvidia thermald \
-	retroarch libretro-* pcsx2 dolphin-emu ppsspp
+	retroarch libretro-* pcsx2 dolphin-emu ppsspp nasm
 }
 
 setup_fans_and_thermals() 
@@ -56,7 +56,7 @@ install_pcs3()
 
 install_python_packages_via_pip() 
 {
-	pip install FoxDot soundscrape youtuhe-dl mopidy-gmusic Mopidy-Podcast Mopidy-Podcast-gpodder.net
+	pip3 install FoxDot soundscrape youtuhe-dl mopidy-gmusic Mopidy-Podcast Mopidy-Podcast-gpodder.net
 }
 
 add_user_to_docker_group() 
@@ -69,6 +69,12 @@ install_rust()
 {
 	#rust lang
 	curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable
+}
+
+install_pytorch() 
+{
+	pip3 install http://download.pytorch.org/whl/cu92/torch-0.4.1-cp36-cp36m-linux_x86_64.whl 
+	pip3 install torchvision
 }
 
 install_from_github() 
@@ -113,12 +119,16 @@ install_pentest_tools()
 	katoolin
 }
 
+#Main program execution starts here.
+set -o errexit -o nounset -o pipefail
+
 install_via_apt
 add_user_to_docker_group
 setup_fans_and_thermals
 install_rust
-install_from_github
 install_python_packages_via_pip
+install_pytorch
 install_from_github
 install_pcs3
 install_pentest_tools
+printf "Still need to Setup:\n 1: CEMU - WIIU emulator\n 2: The rest of the FoxDot live-coding environemnt.\n    See http://foxdot.org/installation/"
