@@ -62,7 +62,7 @@ install_python_packages_via_pip()
 add_user_to_docker_group() 
 {
 	export name=$(whoami)
-	sudo usermod -aG docker $name
+	sudo usermod -aG docker "$name"
 }
 
 install_rust() 
@@ -106,7 +106,10 @@ install_from_github()
 	#i3-gaps
 
 	#clean up
-	rm -rf ~/*.deb
+	for deb in ~/*.deb; do
+		rm -rf "$deb";
+	done;
+
 	rm -rf ~/dosage/
 	
 }
