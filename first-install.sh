@@ -106,9 +106,10 @@ install_from_github()
 	#i3-gaps
 
 	#clean up
-	for deb in ~/*.deb; do
-		rm -rf "$deb";
-	done;
+	for file in ~/*.deb; do
+		[ -e "$file" ] || continue
+		rm -rf "$file"
+	done
 
 	rm -rf ~/dosage/
 	
