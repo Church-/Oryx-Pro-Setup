@@ -37,8 +37,9 @@ install_via_apt()
 	sudo apt -y install ranger mpd firefox kubectl dnsutils python-pip python-pip3 \
 	steam git rsync feh neofetch jq borgbackup nmtui tmux kdeconnect fbreader pastebinit fzf \
 	zsh ncmpcpp neomutt urlview newsbeuter mpv rtorrent transmission-gtk weechat rofi mopidy \
-	system76-cuda-latest system76-cudnn-9.2 system76-driver system76-driver-nvidia thermald \
-	retroarch libretro-* pcsx2 dolphin-emu ppsspp nasm
+	system76-driver system76-driver-nvidia system76-cuda-latest system76-cudnn-9.2 thermald \
+	retroarch libretro-* pcsx2 dolphin-emu ppsspp nasm frint-demo libfprint-dev libpam-fprintd \
+	fprintd
 }
 
 setup_fans_and_thermals() 
@@ -89,7 +90,7 @@ install_from_github()
 	sudo mv kops-linux-amd64 /usr/local/bin/kops
 	
 	#dosage
-	git clone https://github.com/webcomics/dosage && sudo pip install -r dosage/requirements.txt && sudo python dosage/setup.py install
+	git clone https://github.com/webcomics/dosage && sudo pip install -r ./dosage/requirements.txt && sudo python ./dosage/setup.py install
 	
 	#ripgrep
 	curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.9.0/ripgrep_0.9.0_amd64.deb
@@ -101,6 +102,10 @@ install_from_github()
 	wget -O ~/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
 	dpkg -i ~/discord.deb --force-confnew
 
+	#IUVolt
+	git clone https://github.com/tiziw/iuvolt
+	chmod +X ./iuvolt/install.sh
+	sudo bash ./iuvolt/./install.sh
 	#polybar
 
 	#i3-gaps
@@ -111,8 +116,8 @@ install_from_github()
 		rm -rf "$file"
 	done
 
-	rm -rf ~/dosage/
-	
+	rm -rf ./dosage/
+	rm -rf ./iuvolt/
 }
 
 install_pentest_tools() 
